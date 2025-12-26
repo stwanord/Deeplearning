@@ -1,4 +1,4 @@
-Derin Öğrenme Tabanlı Yangın ve Duman Algılama Sistemi
+DERİN ÖĞRENME TABANLI YANGIN VE DUMAN ALGILAMA SİSTEMİ
 1. Proje Konusu ve Motivasyonu
 Giriş ve Önem: Doğal afetler arasında yer alan orman yangınları ve endüstriyel tesislerde meydana gelen yangın kazaları, erken müdahale edilmediği takdirde ekosistem ve insan yerleşkeleri üzerinde geri döndürülemez tahribatlara yol açmaktadır. Geleneksel duman dedektörleri, dumanın sensöre fiziksel olarak ulaşmasını gerektirdiği için açık alanlarda veya yüksek tavanlı yapılarda tepki süresi açısından yetersiz kalmaktadır. Bu çalışmada, görsel verileri analiz ederek yangını henüz başlangıç safhasında tespit edebilen bir derin öğrenme modeli geliştirilmesi hedeflenmiştir.
 
