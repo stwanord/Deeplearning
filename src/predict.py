@@ -5,15 +5,13 @@ from model import FireDetectionCNN
 import gradio as gr
 import os
 
-# Parametreler
+
 MODEL_PATH = "fire_model.pth"
-CLASS_NAMES = ['Fire', 'Neutral', 'Smoke'] # Eğitimdeki sırayla aynı olmalı!
-# Not: Eğer dataset.py içinde class_to_idx farklıysa burayı güncellemek gerekir.
-# Eğitim çıktısında "Classes found: [...]" sırasına bakın. Genelde alfabetiktir.
+CLASS_NAMES = ['Fire', 'Neutral', 'Smoke'] 
 
 def load_model():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # Sınıf sayısı 3
+
     model = FireDetectionCNN(num_classes=len(CLASS_NAMES))
     
     if os.path.exists(MODEL_PATH):
@@ -21,7 +19,7 @@ def load_model():
         print("Model loaded successfully.")
     else:
         print(f"Model file '{MODEL_PATH}' not found. Please train the model first.")
-        # Demo için random weights ile devam edebilir veya hata verdirebiliriz.
+     
         
     model.to(device)
     model.eval()
@@ -33,7 +31,6 @@ def predict_image(image):
     if image is None:
         return "Please upload an image."
 
-    # Resmi hazırla
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
@@ -46,19 +43,16 @@ def predict_image(image):
         outputs = model(img_tensor)
         probabilities = torch.nn.functional.softmax(outputs, dim=1)
         
-        # En yüksek olasılıklı sınıf
         top_prob, top_class = torch.topk(probabilities, 1)
         class_idx = top_class.item()
         score = top_prob.item()
         
         result_text = f"Prediction: {CLASS_NAMES[class_idx]} ({score*100:.2f}%)"
-        
-        # Detaylı skorlar
+       
         details = {CLASS_NAMES[i]: float(probabilities[0][i]) for i in range(len(CLASS_NAMES))}
         
     return details
 
-# Gradio Arayüzü
 if __name__ == "__main__":
     interface = gr.Interface(
         fn=predict_image,
@@ -66,7 +60,7 @@ if __name__ == "__main__":
         outputs=gr.Label(num_top_classes=3),
         title="Fire & Smoke Detection System",
         description="Upload an image to detect Fire, Smoke, or Neutral state.",
-        examples=[] # İsterseniz örnek resim yolları ekleyebilirsiniz
+        examples=[] 
     )
     
     interface.launch(share=True)
