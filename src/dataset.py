@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader, random_split
 import os
 
 def get_data_loaders(data_dir, batch_size=32, val_split=0.2):
-    # Görüntü dönüşümleri
+
     train_transforms = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.RandomHorizontalFlip(),
@@ -21,22 +21,19 @@ def get_data_loaders(data_dir, batch_size=32, val_split=0.2):
     ])
 
     try:
-        # data_dir içinde 'Train' klasörü arayalım (Kullanıcının yapısı: data/Train veya data/FIRE-SMOKE-DATASET/Train olabilir)
+       
         train_dir = data_dir
         for root, dirs, files in os.walk(data_dir):
             if "Train" in dirs:
                 train_dir = os.path.join(root, "Train")
                 print(f"Detected Train directory at: {train_dir}")
                 break
-            # Eğer Train yoksa ama sınıflar varsa kök dizini kullanırız.
-
-        # Klasör yapısına göre veriyi yükle
+      
         full_dataset = datasets.ImageFolder(root=train_dir, transform=train_transforms)
         
-        # Sınıfları yazdır
+       
         print(f"Classes found: {full_dataset.classes}")
-        
-        # Train/Validation split
+       
         dataset_size = len(full_dataset)
         val_size = int(val_split * dataset_size)
         train_size = dataset_size - val_size
