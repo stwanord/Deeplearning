@@ -18,6 +18,7 @@ Normal (Neutral): Yanlış alarmları en aza indirmek için seçilen; orman, şe
 
 Veri Hazırlık Süreci: Modelin giriş katmanıyla uyum sağlaması için tüm görseller 224x224 piksel boyutuna getirilmiştir. Eğitim sırasında modelin kararlılığını artırmak amacıyla piksel değerleri normalize edilmiştir. Ayrıca, modelin sadece belirli pozisyonlara ezber yapmasını önlemek ve genelleme yeteneğini artırmak için eğitim aşamasında yatay çevirme (horizontal flip) ve rastgele döndürme (rotation) gibi veri artırma (augmentation) teknikleri uygulanmıştır.
 Projenin çalışabilmesi için dataset isimli bir klasör oluşturup bu klasöre aşağıdaki repodaki dataseti çekmeniz gerekmektedir.
+
 Dataset kaynağı:https://github.com/DeepQuestAI/Fire-Smoke-Dataset
 
 3. Yöntem Analizi ve Algoritma Seçimi
