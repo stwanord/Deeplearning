@@ -1,70 +1,38 @@
-# DERİN ÖĞRENME DÖNEM PROJESİ RAPORU
+Derin Öğrenme Tabanlı Yangın ve Duman Algılama Sistemi
+1. Proje Konusu ve Motivasyonu
+Giriş ve Önem: Doğal afetler arasında yer alan orman yangınları ve endüstriyel tesislerde meydana gelen yangın kazaları, erken müdahale edilmediği takdirde ekosistem ve insan yerleşkeleri üzerinde geri döndürülemez tahribatlara yol açmaktadır. Geleneksel duman dedektörleri, dumanın sensöre fiziksel olarak ulaşmasını gerektirdiği için açık alanlarda veya yüksek tavanlı yapılarda tepki süresi açısından yetersiz kalmaktadır. Bu çalışmada, görsel verileri analiz ederek yangını henüz başlangıç safhasında tespit edebilen bir derin öğrenme modeli geliştirilmesi hedeflenmiştir.
 
-**Konu:** Convolutional Neural Networks (CNN) ile Yangın ve Duman Tespiti
+Literatür ve Uygulama Gerekçesi: Geçmişte bu alanda yapılan çalışmalar genellikle RGB veya HSV gibi renk uzayları üzerinden yapılan eşikleme yöntemlerine dayanmaktaydı. Ancak bu yöntemler, gün batımı ışığı veya yapay aydınlatmalar gibi durumlarda yüksek oranda "yanlış alarm" üretmekteydi. Günümüzde ise Evrişimli Sinir Ağları (CNN), görsel dokuları ve karmaşık desenleri (alev dili, duman yoğunluğu vb.) tanıma yeteneği ile bu problemin çözümünde altın standart haline gelmiştir. Bu proje, modern görüntü işleme tekniklerinin güvenlik sistemlerine entegrasyonu açısından kritik bir öneme sahiptir.
 
----
+2. Veri Setinin Yapılandırılması ve Ön İşleme
+Çalışma kapsamında, modelin farklı çevresel koşullarda yüksek doğrulukla çalışabilmesi için üç ana sınıftan oluşan bir veri seti kullanılmıştır:
 
-## 1. Proje Konusu ve Amacı (15 Puan)
-**Seçilen Konu:** Görüntü İşleme tabanlı Yangın ve Duman Tespiti.
+Yangın (Fire): Çeşitli ışık ve arka plan koşullarında alev görüntüleri.
 
-**Seçilme Gerekçesi:**
-Orman yangınları ve bina yangınları, erken müdahale edilmediğinde büyük can ve mal kayıplarına yol açmaktadır. Geleneksel duman dedektörleri sadece kapalı ve küçük alanlarda çalışırken, kamera tabanlı sistemler açık alanlarda (ormanlar, fabrikalar) geniş çaplı izleme yapabilir. Bu proje, derin öğrenme tekniklerinin bu hayati problemde nasıl kullanılabileceğini göstermek amacıyla seçilmiştir.
+Duman (Smoke): Yangın öncesi veya başlangıcındaki duman emisyonlarını içeren görseller.
 
-**Literatür Özeti:**
-Literatürde yangın tespiti için renk bazlı (RGB/HSV analizleri) geleneksel görüntü işleme yöntemleri kullanılsa da, son yıllarda CNN (Evrişimli Sinir Ağları) modellerinin çok daha yüksek başarı sağladığı görülmüştür. Özellikle AlexNet, VGG16 ve ResNet gibi mimariler bu alanda sıkça kullanılmaktadır.
+Normal (Neutral): Yanlış pozitif tahminleri engellemek adına doğa, şehir ve iç mekan manzaraları.
 
-**Alanın Önemi:**
-Akıllı Şehirler (Smart Cities) ve IoT tabanlı güvenlik sistemlerinde kamera verilerinin otomatik analizi giderek önem kazanmaktadır. Bu proje, otonom gözetleme sistemlerinin temelini oluşturabilecek bir çalışmadır.
+Ön İşleme Süreçleri: Modelin giriş katmanıyla uyumlu olması için tüm görseller 224x224 piksel boyutuna getirilmiştir. Eğitim sırasında modelin kararlılığını artırmak amacıyla ImageNet ortalamaları baz alınarak normalizasyon işlemi uygulanmıştır. Ayrıca, sınırlı veri setlerinde aşırı öğrenmeyi (overfitting) engellemek ve modelin genelleme yeteneğini artırmak için eğitim aşamasında yatay çevirme (flipping) ve rastgele döndürme (rotation) gibi veri artırma (augmentation) tekniklerinden yararlanılmıştır.
 
----
+3. Yöntem Seçimi ve Teknik Analiz
+Projede ana algoritma olarak Evrişimli Sinir Ağları (CNN) tercih edilmiştir.
 
-## 2. Veri Seti (Dataset) (15 Puan)
-**Kullanılan Veri Seti:** DeepQuestAI Fire-Smoke Dataset (veya benzeri açık kaynak veri seti).
-**Yapısı:**
-Veri seti üç ana sınıftan oluşmaktadır:
-1.  **Fire (Yangın):** Çeşitli açılardan ve ışık koşullarında alev görüntüleri.
-2.  **Smoke (Duman):** Siyah ve beyaz duman içeren görüntüler.
-3.  **Neutral (Normal):** Yangın olmayan doğa, orman ve şehir görüntüleri.
+Karşılaştırmalı Analiz ve Seçim Nedeni:
 
-**Ön İşleme (Preprocessing):**
-*   **Boyutlandırma:** Tüm görüntüler modelin girişine uygun olarak **224x224** piksel boyutuna getirilmiştir.
-*   **Normalizasyon:** Piksel değerleri standart ImageNet ortalamalarına (mean=[0.485, 0.456, 0.406]) göre normalize edilmiştir.
-*   **Veri Artırma (Data Augmentation):** Eğitim setindeki görüntülerin sayısı ve çeşitliliğini artırmak için rastgele yatay çevirme (Horizontal Flip) ve döndürme (Rotation) işlemleri uygulanmıştır.
+CNN vs. Klasik ANN: Klasik yapay sinir ağları, görüntüyü düz bir vektör olarak kabul eder ve pikseller arasındaki mekansal ilişkiyi kaybeder. CNN ise filtreleme mantığıyla görüntüdeki "kenar", "köşe" ve "doku" bilgilerini korur.
 
----
+Geleneksel Görüntü İşleme vs. Derin Öğrenme: Geleneksel yöntemlerde özellikler (features) elle tanımlanırken, CNN bu özellikleri eğitim sürecinde kendisi optimize eder.
 
-## 3. Yöntem ve Algoritma (15 Puan)
-**Kullanılan Yöntem:** Convolutional Neural Network (CNN).
+Model Mimarisi: PyTorch kütüphanesi kullanılarak tasarlanan model; üç adet evrişimli blok (Convolution, ReLU, MaxPooling), bir düzleştirme (Flatten) katmanı ve sınıflandırma için tam bağlantılı (Fully Connected) katmanlardan oluşmaktadır. Modelin güvenilirliğini artırmak adına, nöronların yarısını rastgele pasif bırakan %50 Dropout mekanizması entegre edilmiştir.
 
-**Neden CNN?**
-Görüntü verileri üzerindeki desenleri, kenarları ve dokuları (alev dokusu, duman yoğunluğu vb.) en iyi tanıyan mimari CNN'dir. Klasik Yapay Sinir Ağları (ANN), görüntüdeki mekansal (spatial) ilişkileri koruyamazken, CNN filtreleme mantığıyla bunu başarır.
+4. Model Eğitimi ve Değerlendirme
+Eğitim süreci, çok sınıflı sınıflandırma problemlerinde verimliliği kanıtlanmış olan CrossEntropyLoss hata fonksiyonu ve Adam optimizer (öğrenme hızı: 0.001) kullanılarak yürütülmüştür.
 
-**Model Mimarisi:**
-Projede 3 katmanlı özel bir CNN mimarisi tasarlanmıştır:
-1.  **Conv Block 1:** 32 Filtre (3x3), ReLU Aktivasyon, Max Pooling (2x2).
-2.  **Conv Block 2:** 64 Filtre (3x3), ReLU Aktivasyon, Max Pooling (2x2).
-3.  **Conv Block 3:** 128 Filtre (3x3), ReLU Aktivasyon, Max Pooling (2x2).
-4.  **Flatten:** Özellik haritalarının vektöre dönüştürülmesi.
-5.  **Dropout:** %50 oranında nöron kapatma (Ezberlemeyi/Overfitting'i engellemek için).
-6.  **Fully Connected Layers:** Sınıflandırma katmanları.
+Bulgular:
 
----
+Model, 10 epoch süren eğitim sonunda doğrulama (validation) seti üzerinde %85'in üzerinde bir doğruluk (accuracy) oranına ulaşmıştır.
 
-## 4. Model Eğitimi ve Değerlendirme (20 Puan)
-**Eğitim Parametreleri:**
-*   **Optimizer:** Adam (Learning Rate: 0.001)
-*   **Loss Function:** CrossEntropyLoss (Çok sınıflı sınıflandırma için)
-*   **Epoch Sayısı:** 10
-*   **Batch Size:** 32
+Eğitim kaybı (Loss) grafiği incelendiğinde, modelin hata payının her aşamada istikrarlı bir şekilde azaldığı gözlemlenmiştir.
 
-**Eğitim Sonuçları:**
-Model eğitimi sonucunda elde edilen başarı grafikleri `training_results.png` dosyasında sunulmuştur.
-*   **Eğitim Kaybı (Train Loss):** Düzenli olarak düşüş göstermiştir.
-*   **Doğrulama Doğruluğu (Validation Accuracy):** %85 seviyelerinin üzerine çıkmıştır.
-
-Model, eğitim setinde görmediği "Validation" verileri üzerinde başarılı tahminler yaparak genelleme yeteneğini kanıtlamıştır.
-
----
-
-## 5. Sonuç ve Öneriler
-Geliştirilen model, temel düzeyde yangın ve duman tespiti görevini başarıyla yerine getirmektedir. Projenin ilerleyen aşamalarında daha büyük veri setleri ve Transfer Learning (hazır eğitilmiş modeller) kullanılarak başarı oranı artırılabilir. Ayrıca, model bir drone veya güvenlik kamerasına entegre edilerek gerçek zamanlı bir uygulama haline getirilebilir.
+Modelin, özellikle "Normal" sahneler ile "Duman" arasındaki ince farkları ayırt edebilme becerisi, sistemin güvenilirliğini kanıtlar niteliktedir. Elde edilen başarım grafikleri (training_results.png), modelin hem eğitim hem de test verisi üzerinde dengeli bir performans sergilediğini göstermektedir.
