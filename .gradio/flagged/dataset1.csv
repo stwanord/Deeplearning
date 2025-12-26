@@ -1,4 +1,0 @@
-image,output,timestamp
-.gradio\flagged\image\ac893f8dd621b3c9894d\image_9.jpg,"{""label"": ""Fire"", ""confidences"": [{""label"": ""Fire"", ""confidence"": 0.8187779188156128}, {""label"": ""Neutral"", ""confidence"": 0.13287977874279022}, {""label"": ""Smoke"", ""confidence"": 0.04834238067269325}]}",2025-12-26 22:40:22.462795
-.gradio\flagged\image\a5c5bc247f65ceca4896\image_9.jpg,"{""label"": ""Fire"", ""confidences"": [{""label"": ""Fire"", ""confidence"": 0.8187779188156128}, {""label"": ""Neutral"", ""confidence"": 0.13287977874279022}, {""label"": ""Smoke"", ""confidence"": 0.04834238067269325}]}",2025-12-26 22:40:38.911240
-.gradio\flagged\image\09fb5fc3d4df002ba8f8\image_9.jpg,"{""label"": ""Fire"", ""confidences"": [{""label"": ""Fire"", ""confidence"": 0.8187779188156128}, {""label"": ""Neutral"", ""confidence"": 0.13287977874279022}, {""label"": ""Smoke"", ""confidence"": 0.04834238067269325}]}",2025-12-26 22:40:45.542496
