@@ -35,6 +35,7 @@ Model Mimarisi: PyTorch framework'ü kullanılarak tasarlanan model; üç adet e
 4. Model Eğitimi ve Değerlendirmesi
    
 Eğitim Parametreleri: Modelin eğitimi, çok sınıflı sınıflandırma problemlerinde verimliliği kanıtlanmış olan CrossEntropyLoss hata fonksiyonu ve Adam optimizer (öğrenme hızı: 0.001) ile yürütülmüştür. Eğitim süreci toplam 10 epoch olarak planlanmış ve her batch'te 32 görüntü işlenmiştir.
+Gerekli kütüphaneler:torch, torchvision, matplotlib, pillow, numpy, gradio
 
 5.Performans Analizi:
 
