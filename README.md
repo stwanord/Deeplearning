@@ -43,3 +43,4 @@ Doğruluk (Accuracy): Model, eğitim sonunda doğrulama (validation) seti üzeri
 Hata Payı (Loss): Eğitim kaybı grafiklerinde görüldüğü üzere, model her epoch sonunda istikrarlı bir şekilde yakınsama (convergence) göstermiştir.
 
 Sonuç: Modelin özellikle duman ile bulut/pus arasındaki farkı ve alev ile yoğun ışık kaynaklarını ayırt edebilme becerisi, sistemin güvenilirliğini kanıtlamaktadır. Elde edilen training_results.png dosyası, eğitim ve test aşamalarındaki dengeli performansı doğrulamaktadır.
+Gradyo için: python -u predict.py
