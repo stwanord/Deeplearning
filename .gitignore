@@ -1,4 +1,4 @@
-# Python
+
 __pycache__/
 *.py[cod]
 *$py.class
@@ -22,24 +22,19 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# Virtual Env
 venv/
 env/
 ENV/
 .env
 .venv
 
-# Project Specific
 data/
 *.pth
 *.png
 !training_results.png
-# training_results.png'yi repoya atmak isteriz ama data klasörünü atmak istemeyiz (çok büyük).
-# .pth model dosyası bazen büyük olabilir (Github limiti 100MB). Eğer 100MB altıysa atılabilir.
-# Şimdilik model dosyasını dahil edelim, eğer hata verirse büyük olduğu içindir.
-# *.pth
 
-# IDE
+
+
 .idea/
 .vscode/
 *.swp
