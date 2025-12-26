@@ -1,0 +1,32 @@
+# Derin Öğrenme Dönem Projesi Görev Listesi
+
+## 1. Proje Konusu (15 Puan)
+- [ ] Proje konusunun seçilmesi
+- [ ] Seçilme gerekçesinin yazılması (Neden bu konu?)
+- [ ] İlgili alanda daha önce yapılan uygulamaların araştırılması (Literatür taraması özeti)
+- [ ] İlgili alanın öneminin açıklanması
+
+## 2. Veri Setinin Belirlenmesi (15 Puan)
+- [ ] Uygun bir veri setinin bulunması (Kaggle, UCI vb.)
+- [ ] Veri setinin indirilmesi ve incelenmesi (EDA - Keşifsel Veri Analizi)
+- [ ] Veri ön işleme adımlarının belirlenmesi
+
+## 3. Yöntem/Algoritma Seçimi (15 Puan)
+- [ ] Uygulanacak yöntemlerin belirlenmesi (CNN, LSTM, Transformer vb.)
+- [ ] Seçim gerekçesinin açıklanması
+- [ ] Literatürdeki yöntemlerle karşılaştırmalı analiz yapılması
+
+## 4. Model Eğitimi & Değerlendirme (20 Puan)
+- [ ] Model mimarisinin kodlanması
+- [ ] Modelin eğitilmesi (Training)
+- [ ] Hiperparametre optimizasyonu
+- [ ] Model başarısının değerlendirilmesi (Accuracy, Loss, F1-Score, Confusion Matrix vb.)
+
+## 5. Proje Dokümantasyonu (10 Puan)
+- [ ] Kodların düzenlenmesi ve yorum satırlarının eklenmesi
+- [ ] README dosyasının hazırlanması (GitHub formatında)
+- [ ] Proje raporunun yazılması
+
+## 6. Proje Sunumu (25 Puan)
+- [ ] Sunum dosyasının (PPT/PDF) hazırlanması
+- [ ] Sunum provası ve önemli noktaların not alınması
