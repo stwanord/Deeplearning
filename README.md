@@ -1,57 +1,43 @@
-# 🔥 Fire & Smoke Detection with CNN
+DERİN ÖĞRENME TABANLI YANGIN VE DUMAN ALGILAMA SİSTEMİ
 
-Bu proje, Derin Öğrenme (Deep Learning) yöntemleri kullanılarak kamera görüntülerinden veya fotoğraflardan **Yangın (Fire)**, **Duman (Smoke)** ve **Normal (Neutral)** durumlarını tespit etmek amacıyla geliştirilmiştir.
+1. Proje Konusu ve Motivasyonu
+   
+Seçilme Gerekçesi ve Alanın Önemi: Yangınlar, özellikle ormanlık alanlarda ve endüstriyel tesislerde çok kısa sürede kontrol edilemez boyutlara ulaşarak büyük can ve mal kayıplarına neden olmaktadır. Geleneksel duman dedektörleri, dumanın sensöre fiziksel olarak temas etmesini gerektirdiğinden açık alanlarda veya çok geniş kapalı mekanlarda tepki süresi açısından yetersiz kalmaktadır. Bu projenin temel motivasyonu, kamera görüntüleri üzerinden yapay zeka desteğiyle yangını henüz başlangıç aşamasında (alev veya duman formunda) tespit ederek, erken uyarı sistemlerine otonom ve hızlı bir veri kaynağı sağlamaktır.
 
-## 📋 Proje Hakkında
-**Ders:** Derin Öğrenme (Deep Learning) - Dönem Projesi  
-**Konu:** Görüntü İşleme ile Yangın ve Duman Tespiti  
-**Model:** Convolutional Neural Network (CNN)  
-**Framework:** PyTorch  
+Literatürdeki Önceki Çalışmalar: Geçmişte bu alanda yapılan çalışmalar genellikle RGB veya HSV renk uzayları üzerinden yapılan "renk tabanlı eşikleme" yöntemlerine dayanmaktaydı. Ancak bu yöntemler; güneş ışığı, yapay aydınlatmalar veya turuncu/kırmızı nesneleri yangınla karıştırarak yüksek oranda hatalı alarm (false positive) üretmekteydi. Günümüzde ise Evrişimli Sinir Ağları (CNN), görsel dokuları ve karmaşık desenleri tanıma yeteneği ile bu problemin çözümünde en başarılı yaklaşım olarak kabul edilmektedir.
 
-### 🎯 Amaç
-Orman yangınları ve endüstriyel kazalar gibi durumlarda erken uyarı sistemleri hayati önem taşır. Bu proje, görsel verileri analiz ederek insansız bir şekilde yangın tespiti yapabilen bir yapay zeka modeli geliştirmeyi hedefler.
+2. Veri Seti Belirlenme Kriterleri
+   
+Projede kullanılan veri seti, modelin gerçek hayat senaryolarında karşılaşabileceği çeşitliliği yansıtacak şekilde üç ana kategoriye ayrılmıştır:
 
-## 📂 Veri Seti (Dataset)
-Projede kullanılan veri seti 3 sınıftan oluşmaktadır:
-1.  **Fire:** Alev içeren görüntüler.
-2.  **Smoke:** Yoğun duman içeren görüntüler.
-3.  **Neutral:** Yangın veya duman olmayan doğa/şehir görüntüleri.
+Yangın (Fire): Farklı yoğunluk, açı ve ışık koşullarındaki alev görüntüleri.
 
-Veri seti, eğitim (train) ve test aşamaları için ayrı klasörlerde düzenlenmiştir.
+Duman (Smoke): Yangının ilk evrelerinde ortaya çıkan farklı renk ve yoğunluktaki duman emisyonları.
 
-## 🛠 Görevi Çalıştırma
+Normal (Neutral): Yanlış alarmları en aza indirmek için seçilen; orman, şehir, bina içi ve gökyüzü gibi yangın içermeyen negatif örnekler.
 
-### 1. Gereksinimleri Yükleyin
-```bash
-pip install -r requirements.txt
-```
+Veri Hazırlık Süreci: Modelin giriş katmanıyla uyum sağlaması için tüm görseller 224x224 piksel boyutuna getirilmiştir. Eğitim sırasında modelin kararlılığını artırmak amacıyla piksel değerleri normalize edilmiştir. Ayrıca, modelin sadece belirli pozisyonlara ezber yapmasını önlemek ve genelleme yeteneğini artırmak için eğitim aşamasında yatay çevirme (horizontal flip) ve rastgele döndürme (rotation) gibi veri artırma (augmentation) teknikleri uygulanmıştır.
 
-### 2. Modeli Eğitin
-Eğer hazır model yoksa veya yeniden eğitmek isterseniz:
-```bash
-python src/train.py
-```
-Bu işlem sonucunda `fire_model.pth` dosyası ve `training_results.png` başarım grafiği oluşacaktır.
+3. Yöntem Analizi ve Algoritma Seçimi
+   
+Bu çalışmada derin öğrenme mimarilerinden Evrişimli Sinir Ağları (CNN) tercih edilmiştir.
 
-### 3. Test ve Demo (Arayüz)
-Modeli denemek için web arayüzünü başlatın:
-```bash
-python src/predict.py
-```
-Komut çalıştıktan sonra terminalde çıkan linke (örn: `http://127.0.0.1:7860`) tıklayın.
+Literatür Karşılaştırması ve Seçim Nedeni:
 
-## 📊 Model Başarısı
-Model 10 Epoch sonunda **%85+** doğruluk (Accuracy) oranına ulaşmıştır. 
-*(Eğitim grafikleri `training_results.png` dosyasında mevcuttur)*
+CNN vs. Geleneksel Görüntü İşleme: Geleneksel yöntemlerde özellikler (features) elle (manual) tanımlanırken, CNN bu özellikleri eğitim sürecinde filtreler aracılığıyla kendi optimize eder. Bu durum, karmaşık yangın sahnelerinde çok daha yüksek doğruluk sağlar.
 
-## 🧠 Model Mimarisi
-- **Giriş:** 224x224 RGB Resim
-- **Katmanlar:**
-  - 3 adet Convolutional Blok (Conv2d + ReLU + MaxPool)
-  - Flatten (Düzleştirme)
-  - Fully Connected Layers
-  - Dropout (%50 - Overfitting önlemek için)
-- **Çıkış:** 3 Sınıf (Softmax)
+CNN vs. Klasik Yapay Sinir Ağları (ANN): Klasik sinir ağları görüntüyü düz bir vektör olarak ele alır ve pikseller arasındaki mekansal (spatial) ilişkiyi kaybeder. CNN ise evrişim filtreleri sayesinde görüntüdeki lokal desenleri (alev dokusu, duman dağılımı vb.) korur.
 
-## 📝 Lisans
-Bu proje eğitim amaçlı hazırlanmıştır.
+Model Mimarisi: PyTorch framework'ü kullanılarak tasarlanan model; üç adet evrişimli blok (Convolution, ReLU aktivasyonu, MaxPooling), bir düzleştirme (Flatten) katmanı ve sınıflandırma için tam bağlantılı (Fully Connected) katmanlardan oluşmaktadır. Ayrıca aşırı öğrenmeyi (overfitting) engellemek adına %50 oranında Dropout katmanı kullanılmıştır.
+
+4. Model Eğitimi ve Değerlendirmesi
+   
+Eğitim Parametreleri: Modelin eğitimi, çok sınıflı sınıflandırma problemlerinde verimliliği kanıtlanmış olan CrossEntropyLoss hata fonksiyonu ve Adam optimizer (öğrenme hızı: 0.001) ile yürütülmüştür. Eğitim süreci toplam 10 epoch olarak planlanmış ve her batch'te 32 görüntü işlenmiştir.
+
+5.Performans Analizi:
+
+Doğruluk (Accuracy): Model, eğitim sonunda doğrulama (validation) seti üzerinde %85'in üzerinde bir başarı oranına ulaşmıştır.
+
+Hata Payı (Loss): Eğitim kaybı grafiklerinde görüldüğü üzere, model her epoch sonunda istikrarlı bir şekilde yakınsama (convergence) göstermiştir.
+
+Sonuç: Modelin özellikle duman ile bulut/pus arasındaki farkı ve alev ile yoğun ışık kaynaklarını ayırt edebilme becerisi, sistemin güvenilirliğini kanıtlamaktadır. Elde edilen training_results.png dosyası, eğitim ve test aşamalarındaki dengeli performansı doğrulamaktadır.
